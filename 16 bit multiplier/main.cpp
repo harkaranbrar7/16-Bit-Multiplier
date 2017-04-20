@@ -1,6 +1,14 @@
 //
-//  main.cpp
-//  16 bit multiplier
+//  16-Bit_Multiplier.cpp
+// 
+//  A simulation program for the 16-bit unsigned number multiplier in C++
+//  In this program use 16-bit operands for the multiplication. 
+//  16 bit mutliplicand, 16 bit mutliplier and product is 32 bit
+//  This simulation program uses basic logic gates, MUX , Adder , Decoder , 1 bit ALU ,
+//  1 Bit ALU with overflow checking , 16 Bit ALU 
+//  This program gets input for multiplier in Array of 16 elements each for MD and MQ.
+//  The result of this program is in Array of 32 elements.
+//  This program shows the content of MD, MQ and AC at each step and each iteration.  
 //
 //  Created by Harkaranjeet Singh on 4/11/17.
 //  Copyright © 2017 Harkaranjeet Singh. All rights reserved.
@@ -125,7 +133,7 @@ void DECODER(int x1,int x2, int& d1, int& d2, int& d3 , int& d4 )
 void MUX_4x1(int y1, int y2, int y3, int y4 , int x1, int x2, int&z)
 {
     
-    int tempd1, tempd2, tempd3, tempd4 , tand1, tand2 ,tand3, tand4, tor1,tor2;                           // temp variables
+    int tempd1, tempd2, tempd3, tempd4 , tand1, tand2 ,tand3, tand4, tor1,tor2;    // temp variables
     
     DECODER (x1, x2, tempd1, tempd2 , tempd3, tempd4);           // calling the Decoder with two bit signal opcode getting 4 bit output
     
@@ -291,27 +299,29 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
     
     
     
-    cout<<"================================     INITIAL VALUES     ================================"<<endl;
+    cout<<"================================     INITIAL VALUES     ================================"<<endl<<endl;
     
-    cout<<"      MD  = ";
+    cout<<"                   MD                     AC                   MQ           "<<endl;
+    cout<<"             ";
     for(i=0;i<16;i++)                                  // to display the content of MD at intial
     {
         cout<<MD[i];
     }
-    cout<<endl;
+    cout<<"      ";
     
-    cout<<"      AC  = ";                            // to display the content of AC at intial
+                           // to display the content of AC at intial
     for(i=0;i<16;i++)
     {
         cout<<AC[i];
     }
-    cout<<endl;
+    cout<<"      ";
     
-    cout<<"      MQ  = ";                        // to display the content of MQ at intial
+                            // to display the content of MQ at intial
     for(i=0;i<16;i++)
     {
         cout<<MQ[i];
     }
+    
     cout<<endl<<endl;
     
     
@@ -320,7 +330,7 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
     for (counter=16; counter>=1;counter--)                                        // for loop which runs 16 times
     {
         
-        cout<<"================================     CYCLE COUNTER = "<<counter<< "     ==============================="<<endl<<endl;
+        cout<<"============================     CYCLE COUNTER = "<<counter<< "     ==========================="<<endl<<endl;
        
         
         // Checking the condition which are required to perform the itr
@@ -334,26 +344,25 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
             SixteenBitALU(AC,ZERO,op,AC);                             // calling the sixteen bit ALU to perform addition
         }
         
-        cout<<"      STEP 1   MD  = ";
+         cout<<"                    MD                     AC                   MQ           "<<endl;
+        cout<<"STEP-1       ";
         for(i=0;i<16;i++)                                         // to display the content of MD  at Step 1
         {
             cout<<MD[i];
         }
-        cout<<endl;
+        cout<<"      ";
 
-        cout<<"      STEP 1   AC  = ";
         for(i=0;i<16;i++)                                           // to display the content of AC at Step 1
         {
             cout<<AC[i];
         }
-        cout<<endl;
+        cout<<"      ";
         
-        cout<<"      STEP 1   MQ  = ";
         for(i=0;i<16;i++)                                         // to display the content of MQ  at Step 1
         {
             cout<<MQ[i];
         }
-        cout<<endl<<endl;
+        cout<<endl;
         
         
         
@@ -376,22 +385,19 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
         
         ArraySplitter(ACMQ, AC, MQ);                              // Split 32 element array to two 16 elemenet array
         
-        
-        cout<<"      STEP 2   MD  = ";
+         cout<<"STEP-2       ";
         for(i=0;i<16;i++)                                      // to display the content of MD  at Step 2
         {
             cout<<MD[i];
         }
-        cout<<endl;
+        cout<<"      ";
         
-        cout<<"      STEP 2   AC  = ";
         for (int i = 0; i < 16; i++)                            // to display the content of AC at Step 2
         {
             cout << AC[i];
         }
-        cout<<endl;
+        cout<<"      ";
         
-        cout<<"      STEP 2   MQ  = ";
         for (int i = 0; i < 16; i++)                           // to display the content of MQ at Step 2
         {
             cout << MQ[i];
@@ -402,7 +408,7 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
         //calling Merge function again to display the 32 bit result of each itr
         
         ArrayMerge(AC, MQ, RESULT);
-           cout<<endl<<endl;
+           cout<<endl;
         
     }
     
@@ -411,35 +417,69 @@ void SixteenBitMultiplier(int MD[],int MQ[], int RESULT[])
 
 int main (){
     
-   int RESULT [32] ;
+   int RESULT [32] ;  
     
-    // int MD [16] = {0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1};
-    // int MQ [16]=  {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
-     int MD[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1};
-     int MQ[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1};
-   
+    // Test cases in array for each
     
-    // Test cases by prof
-    
-     //int MD[16] = {0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1};
-     //int MQ[16] = {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
-    //int MD[16] = {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
+     int MD[16] = {0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1};
+     int MQ[16] = {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
+     //int MD[16] = {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
     // int MQ[16] = {0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1};
     // int MD[16] = {1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0};
     // int MQ[16] = {0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,1};
     // int MD[16] = {0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,1};
     // int MQ[16] = {1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0};
     
-
-    SixteenBitMultiplier(MD, MQ, RESULT);
+    
+    SixteenBitMultiplier(MD, MQ, RESULT);          // calling 16 Bit multiplier with given parameters
     
     cout<<"        RESULT     = ";
     for (int i = 0; i < 32; i++)                        // to display the Result
     {
-        cout << RESULT[i];
+        cout << RESULT[i];                             
     }
     cout<<endl<<endl;
     
+
+int MD0[16] = {0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0};
+ int MQ0[16] = {0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1};
+
+SixteenBitMultiplier(MD0, MQ0, RESULT);          // calling 16 Bit multiplier with given parameters
+    
+    cout<<"        RESULT     = ";
+    for (int i = 0; i < 32; i++)                        // to display the Result
+    {
+        cout << RESULT[i];                             
+    }
+    cout<<endl<<endl;
+
+
+ int MD1[16] = {1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0};
+ int MQ1[16] = {0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,1};
+
+
+SixteenBitMultiplier(MD1, MQ1, RESULT);          // calling 16 Bit multiplier with given parameters
+    
+    cout<<"        RESULT     = ";
+    for (int i = 0; i < 32; i++)                        // to display the Result
+    {
+        cout << RESULT[i];                             
+    }
+    cout<<endl<<endl;
+
+
+ int MD2[16] = {0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,1};
+ int MQ2[16] = {1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0};
+
+SixteenBitMultiplier(MD2, MQ2, RESULT);          // calling 16 Bit multiplier with given parameters
+    
+    cout<<"        RESULT     = ";
+    for (int i = 0; i < 32; i++)                        // to display the Result
+    {
+        cout << RESULT[i];                             
+    }
+    cout<<endl<<endl;
+
     return 0;
     
 }
